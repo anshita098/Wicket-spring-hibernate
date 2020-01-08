@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -17,12 +19,21 @@ public class HomePage extends WebPage {
 
     private static Logger LOG = Logger.getLogger(HomePage.class);
 
-    public HomePage(final PageParameters parameters) {
-        super(parameters);
-        LOG.debug("Implmentation says " + inteface.getlist());
+    public HomePage() {
        
-        // TODO Add your page's components here
-
+        LOG.debug("Implmentation says " + inteface.getlist());
+           
+       add(new ListView<Bank>("listView", inteface.getlist())
+       {
+              public void populateItem(final ListItem<Bank> item)
+              {
+                      final Bank c = item.getModelObject();
+                      item.add(new Label("id", c.getId()));
+                      item.add(new Label("email",c.getEmail()));
+               	   	  item.add(new Label("firstname",c.getFirstname()));
+               	   	  item.add(EditBook.link("edit", c.getId()));
+              }
+       });
     }
 
 }

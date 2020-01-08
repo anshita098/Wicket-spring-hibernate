@@ -1,5 +1,8 @@
 package com.github.anirudhvarma12.whs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +31,8 @@ private int id;
 	
 	@Column(name="email")
 	private String email;
+
+	private static final Map<Long, Bank> idToBook = new HashMap<>();
 
 	public int getId() {
 		return id;
@@ -62,7 +67,29 @@ private int id;
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	private void add(final Bank book)
+    {
+        boolean hit = false;
+        for (Bank value : idToBook.values())
+        {
+            if (value.toString().equals(book.toString()))
+            {
+                book.id = value.id;
+                hit = true;
+                break;
+            }
+        }
 
+        if (hit == false)
+        {
+            idToBook.put((long) book.id, book);
+        }
+    }
+	public static Bank get(final long id)
+    {
+        return idToBook.get(id);
+    }
 	@Override
 	public String toString() {
 		return "Bank [id=" + id + ", firstname=" + firstname + ", password=" + password + ", email=" + email + "]";
