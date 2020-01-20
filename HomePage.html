@@ -4,20 +4,31 @@
 </head>
 <body>
 <table cellspacing="0" cellpadding="1" border="1">
+<tr>
+        <th>
+            Name<br/>
+            <form wicket:id="searchForm">
+                <input type="text" wicket:id="nameSearch" required/>
+                <input type="submit" value="Search"/>
+            </form>
+        </th>
+        <th>Actions</th>
+        </tr>
+
     <tbody>
     <tr wicket:id="users">
     <td wicket:id="name"></td>
-    
         <td>
             &nbsp;
             <a href wicket:id="editLink">Edit</a>
-            
+           
         </td>
+       
     </tr>
     </tbody>
-</table>
-
+   
+</table>  
 <wicket:child/>
-
+<a href wicket:id="homeLink">Home</a>
 </body>
 </html>

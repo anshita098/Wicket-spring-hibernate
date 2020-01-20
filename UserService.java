@@ -17,8 +17,8 @@ public class UserService {
             "INSERT INTO users (last_name, first_name, middle_name) VALUES (?, ?, ?);";
     private static final String SQL_DELETE_USER = "DELETE FROM users WHERE id = ?;";
     private static final String SQL_SELECT_USERS_BY_NAME =
-            "SELECT * FROM userbank WHERE UPPER(last_name) LIKE UPPER(?) OR UPPER(first_name) " +
-                    "LIKE UPPER(?) OR UPPER(middle_name) LIKE UPPER(?);";
+            "SELECT * FROM userbank WHERE UPPER(firstname) LIKE UPPER(?) OR UPPER(email) " +
+                    "LIKE UPPER(?) OR UPPER(age) LIKE UPPER(?);";
     private static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM userbank WHERE id = ?";
     private static final String SQL_UPDATE_USER =
             "UPDATE userbank " +
@@ -54,9 +54,10 @@ public class UserService {
 
     public List<Bank> getUsersByName(String name) {
     	JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
+    	String SQL="SELECT * FROM userbank WHERE UPPER(firstname) LIKE UPPER(?) OR UPPER(email) " +
+                        "LIKE UPPER(?) OR UPPER(age) LIKE UPPER(?)";
         return jdbcTemplate.query(
-                SQL_SELECT_USERS_BY_NAME,
+                SQL,
                 new Object[]{name + "%", name + "%", name + "%"},
                 userRowMapper()
         );
